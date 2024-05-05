@@ -105,30 +105,30 @@ public class GildedRoseTest
         });
     }
 
-    // [TestCase(20, 10, 19, 8)]
-    // [TestCase(10, 10, 9, 8)]
-    // [TestCase(1, 1, 0, 0)]
-    // [TestCase(1, 0, 0, 0)]
-    // [TestCase(0, 0, -1, 0)]
-    // [TestCase(-1, 0, -2, 0)]
-    // [TestCase(-1, 2, -2, 0)]
-    // public void UpdateItemQuality_conjured_should_update_sellIn_and_quality(
-    //     int sellIn, int quality, int expectedSellIn, int expectedQuality)
-    // {
-    //     var item = new Item
-    //     {
-    //         Name = GildedRose.Conjured,
-    //         Quality = quality,
-    //         SellIn = sellIn
-    //     };
-    //
-    //     GildedRose.UpdateItemQualityAndSellIn(item);
-    //
-    //     item.Should().BeEquivalentTo(new Item()
-    //     {
-    //         Name = GildedRose.Conjured,
-    //         Quality = expectedQuality,
-    //         SellIn = expectedSellIn
-    //     });
-    // }
+    [TestCase(20, 10, 19, 8)]
+    [TestCase(10, 10, 9, 8)]
+    [TestCase(1, 1, 0, 0)]
+    [TestCase(1, 0, 0, 0)]
+    [TestCase(0, 0, -1, 0)]
+    [TestCase(-1, 0, -2, 0)]
+    [TestCase(-1, 2, -2, 0)]
+    public void UpdateItemQuality_conjured_should_update_sellIn_and_quality(
+        int sellIn, int quality, int expectedSellIn, int expectedQuality)
+    {
+        var item = new Item
+        {
+            Name = GildedRose.Conjured,
+            Quality = quality,
+            SellIn = sellIn
+        };
+    
+        GildedRose.UpdateItemQualityAndSellIn(item);
+    
+        item.Should().BeEquivalentTo(new Item()
+        {
+            Name = GildedRose.Conjured,
+            Quality = expectedQuality,
+            SellIn = expectedSellIn
+        });
+    }
 }

@@ -25,23 +25,29 @@ namespace csharp
         public const string AgedBrie = "Aged Brie";
         public const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         public const string BackstagePass = "Backstage passes to a TAFKAL80ETC concert";
-        public const string Conjured = "Conjured";
+        public const string Conjured = "Conjured Mana Cake";
 
         public const int MaxQuality = 50;
         public const int MinQuality = 0;
 
         public static void UpdateItemQualityAndSellIn(Item item)
         {
-            if (item.Name == Sulfuras)
-                return;
-
-            if (item.Name == BackstagePass)
-                UpdateBackstagePassQuality(item);
-            else if (item.Name == AgedBrie)
-                UpdateAgedBrieQuality(item);
-            else
+            switch (item.Name)
             {
-                item.Quality -= item.SellIn < 1 ? 2 : 1;
+                case Sulfuras:
+                    return;
+                case BackstagePass:
+                    UpdateBackstagePassQuality(item);
+                    break;
+                case AgedBrie:
+                    UpdateAgedBrieQuality(item);
+                    break;
+                case Conjured:
+                    item.Quality -= 2;
+                    break;
+                default:
+                    item.Quality -= item.SellIn < 1 ? 2 : 1;
+                    break;
             }
 
             item.SellIn -= 1;
