@@ -32,56 +32,43 @@ namespace csharp
 
         public static void UpdateItemQualityAndSellIn(Item item)
         {
-            switch (item.Name)
+            if (item.Name is Sulfuras)
+                return;
+
+            var quality = item.Name switch
             {
-                case Sulfuras:
-                    return;
-                case BackstagePass:
-                    UpdateBackstagePassQuality(item);
-                    break;
-                case AgedBrie:
-                    UpdateAgedBrieQuality(item);
-                    break;
-                case Conjured:
-                    item.Quality -= 2;
-                    break;
-                default:
-                    item.Quality -= item.SellIn < 1 ? 2 : 1;
-                    break;
-            }
+                BackstagePass => GetBackstagePassQuality(item),
+                AgedBrie => GetAgedBrieQuality(item),
+                Conjured => item.Quality - 2,
+                _ => item.Quality - (item.SellIn < 1 ? 2 : 1)
+            };
 
             item.SellIn -= 1;
 
-            item.Quality = Math.Max(item.Quality, MinQuality);
+            item.Quality = Math.Max(quality, MinQuality);
         }
 
-        private static void UpdateAgedBrieQuality(Item item)
+        private static int GetAgedBrieQuality(Item item)
         {
-            item.Quality += item.SellIn <= 0 ? 2 : 1;
+            var quality = item.Quality + (item.SellIn < 1 ? 2 : 1);
 
-            item.Quality = Math.Min(item.Quality, MaxQuality);
+            return Math.Min(quality, MaxQuality);
         }
 
-        private static void UpdateBackstagePassQuality(Item item)
+        private static int GetBackstagePassQuality(Item item)
         {
-            item.Quality += 1;
+            var quality = item.Quality + 1;
 
-            if (item.SellIn <= 10)
-            {
-                item.Quality += 1;
-            }
+            if (item.SellIn <= 10) 
+                quality += 1;
 
-            if (item.SellIn <= 5)
-            {
-                item.Quality += 1;
-            }
-            
-            if (item.SellIn < 1)
-            {
-                item.Quality = 0;
-            }
+            if (item.SellIn <= 5) 
+                quality += 1;
 
-            item.Quality = Math.Min(item.Quality, MaxQuality);
+            if (item.SellIn < 1) 
+                quality = 0;
+
+            return Math.Min(quality, MaxQuality);
         }
     }
 }
